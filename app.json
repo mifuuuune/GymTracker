@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "CountdownTest",
-    "slug": "CountdownTest",
+    "name": "GymTracker",
+    "slug": "GymTracker",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,16 +18,23 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.eugnot.GymTracker"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.eugnot.GymTracker"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ba1b5ebe-3214-4400-9fb2-5516e252f50e"
+      }
     }
   }
 }
