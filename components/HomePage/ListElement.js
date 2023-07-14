@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
         marginLeft: 6,
         marginRight: 6,
         padding: 15,
-        backgroundColor: "#ddd",
+        backgroundColor: "rgba(51, 153, 51, 0.3);",
         borderColor: "#000",
         borderRadius: 5
     },
@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
 export default function ListElement({ item, nav }) {
 
     const clickExercise = () => {
-        console.log("Press: " + item.name)
         nav.navigate('Exercise', { name: item.name })
     }
 

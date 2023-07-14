@@ -6,11 +6,9 @@ import { getTrainingJson } from './utils'
 
 var schedule = []
 
-schedule = getTrainingJson()
-
 const styles = StyleSheet.create({
     tab: {
-        backgroundColor: "#888"
+        backgroundColor: "green"
     },
     button: {
         alignItems: 'center',
@@ -19,7 +17,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 32,
         borderRadius: 4,
         elevation: 3,
-        backgroundColor: 'black',
+        backgroundColor: 'green',
       },
       buttonText: {
         fontSize: 16,
@@ -32,6 +30,10 @@ const styles = StyleSheet.create({
 
 export default function HomePage({ navigation }) {
 
+    const layout = useWindowDimensions();
+    const [index, setIndex] = React.useState(0);
+    const [routeObject, setRouteObject] = React.useState(null)
+
     const renderItem = ({ item }) => {
         return (
             <ListElement item={item} nav={navigation} />
@@ -42,40 +44,41 @@ export default function HomePage({ navigation }) {
     var sceneMap = {}
     var routesState = []
 
-    schedule.map((elem, index) => {
+    if (routeObject == null) {
 
-        const onPress = () => {
-            navigation.navigate('Session', { data: elem.exercises })
-        }
-
-        var route = () => (
-            <View style={{ flex: 1, backgroundColor: '#ffffff' }}>
-                <FlatList
-                    data={elem.exercises}
-                    renderItem={renderItem}
-                />
-                <Pressable style={styles.button} onPress={onPress}>
-                    <Text style={styles.buttonText}>INIZIA</Text>
-                </Pressable>
-            </View>
-        );
-        routesArray.push(route)
-        sceneMap['key' + index] = routesArray[index]
-        routesState.push({
-            key: 'key' + index,
-            title: elem.day
+        getTrainingJson().then(res => {
+            schedule = res
+            console.log("SCHEDULE: " + schedule)
+            schedule.map((elem, index) => {
+    
+                const onPress = () => {
+                    navigation.navigate('Session', { data: elem.exercises })
+                }
+    
+                var route = () => (
+                    <View style={{ flex: 1, backgroundColor: '#ffffff' }}>
+                        <FlatList
+                            data={elem.exercises}
+                            renderItem={renderItem}
+                        />
+                        <Pressable style={styles.button} onPress={onPress}>
+                            <Text style={styles.buttonText}>INIZIA</Text>
+                        </Pressable>
+                    </View>
+                );
+                routesArray.push(route)
+                sceneMap['key' + index] = routesArray[index]
+                routesState.push({
+                    key: 'key' + index,
+                    title: elem.day
+                })
+            })
+            setRouteObject({
+                routes: routesState,
+                renderScene: SceneMap(sceneMap)
+            })
         })
-    })
 
-    const renderScene = SceneMap(sceneMap)
-
-    const layout = useWindowDimensions();
-
-    const [index, setIndex] = React.useState(0);
-
-    const [routes] = React.useState(routesState)
-
-    if (schedule.length == 0)
         return (
             <View>
                 <Text>
@@ -83,14 +86,17 @@ export default function HomePage({ navigation }) {
                 </Text>
             </View>
         )
+    }
+
+    var routes = routeObject.routes
 
     return (
         <TabView
             navigationState={{ index, routes }}
-            renderScene={renderScene}
+            renderScene={routeObject.renderScene}
             onIndexChange={setIndex}
             initialLayout={{ width: layout.width }}
             renderTabBar={props => <TabBar {...props} style={styles.tab}/>}
         />
-    );
+    )
 }

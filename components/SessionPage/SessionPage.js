@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Text, View, Pressable, StyleSheet } from 'react-native';
-import GLOBAL, { currentExercise } from '../../global/global.js'
+import GLOBAL from '../../global/global.js'
 import YoutubePlayer from "react-native-youtube-iframe"
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 32,
         borderRadius: 4,
         elevation: 3,
-        backgroundColor: 'black',
+        backgroundColor: 'green',
         height: 50
     },
     buttonText: {
@@ -48,14 +48,16 @@ const styles = StyleSheet.create({
         paddingHorizontal: 32,
         borderRadius: 4,
         elevation: 3,
-        backgroundColor: 'black',
+        backgroundColor: 'green',
         height: 50
     },
     title: {
         fontSize: 30,
         textAlign: "center",
         padding: 5,
-        margin: 20
+        margin: 20,
+        fontWeight: "bold",
+        color: "white"
     },
     timerContainer: {
         flex: 1,
@@ -70,6 +72,12 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 20
     },
+    titleDiv: {
+        marginHorizontal: 20,
+        borderRadius: 10,
+        backgroundColor: "green",
+        marginBottom: 5
+    }
 
 })
 
@@ -122,9 +130,11 @@ export default function SessionPage({ navigation, route }) {
 
     if (rest) return (
         <View style={styles.main}>
-            <Text style={styles.title}>
-                Riposo
-            </Text>
+            <View style={styles.titleDiv}>
+                <Text style={styles.title}>
+                    Riposo
+                </Text>
+            </View>
 
             <View style={styles.timerContainer}>
                 <CountdownCircleTimer
@@ -147,9 +157,11 @@ export default function SessionPage({ navigation, route }) {
     )
     else return (
         <View style={styles.main}>
-            <Text style={styles.title}>
-                {exercices[current].name}
-            </Text>
+            <View style={styles.titleDiv}>
+                <Text style={styles.title}>
+                    {exercices[current].name}
+                </Text>
+            </View>
 
             <View style={styles.video}>
                 <YoutubePlayer
